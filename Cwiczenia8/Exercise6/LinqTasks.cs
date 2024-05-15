@@ -1,4 +1,5 @@
-﻿using Exercise6.Models;
+﻿using System.Xml.Linq;
+using Exercise6.Models;
 
 namespace Exercise6
 {
@@ -205,7 +206,11 @@ namespace Exercise6
         /// </summary>
         public static IEnumerable<object> Task5()
         {
-            IEnumerable<object> result = null;
+            IEnumerable<object> result = Emps.Select(e=>new
+            {
+                Nazwisko = e.Ename,
+                Praca = e.Job
+            });
             return result;
         }
 
@@ -216,7 +221,7 @@ namespace Exercise6
         /// </summary>
         public static IEnumerable<object> Task6()
         {
-            IEnumerable<object> result = null;
+            IEnumerable<object> result = Emps.Join(Depts,k=>k.Deptno,e=>e.Deptno,(emp, dept)=>emp.Ename));
             return result;
         }
 
