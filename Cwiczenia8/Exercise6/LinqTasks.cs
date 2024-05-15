@@ -1,4 +1,6 @@
-﻿using System.Xml.Linq;
+﻿using System.ComponentModel.Design;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using Exercise6.Models;
 
 namespace Exercise6
@@ -235,7 +237,13 @@ namespace Exercise6
         /// </summary>
         public static IEnumerable<object> Task7()
         {
-            IEnumerable<object> result = null;
+            IEnumerable<object> result = Emps
+                .GroupBy(e => e.Job)
+                .Select(e => new
+            {
+                Praca = e.First().Job,
+                LiczbaPracownikow = e.Count()
+            });
             return result;
         }
 
@@ -245,7 +253,7 @@ namespace Exercise6
         /// </summary>
         public static bool Task8()
         {
-            bool result = false;
+            bool result = Emps.Any(e=>e.Job=="Backend programmer");
             return result;
         }
 
@@ -255,7 +263,10 @@ namespace Exercise6
         /// </summary>
         public static Emp Task9()
         {
-            Emp result = null;
+            Emp result = Emps.Select(e=>e)
+                .Where(e=>e.Job=="Frontend programmer")
+                .OrderByDescending(e=>e.HireDate)
+                .First();
             return result;
         }
 
@@ -302,6 +313,7 @@ namespace Exercise6
                     name = Depts.Dname,
                     NumOfEmplyees = emps.Count()
                 }).Where(e => e.NumOfEmplyees > 1);
+            //Nie skonczone
             return result;
         }
         
