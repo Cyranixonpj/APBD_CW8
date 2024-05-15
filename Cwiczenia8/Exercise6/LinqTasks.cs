@@ -221,8 +221,14 @@ namespace Exercise6
         /// </summary>
         public static IEnumerable<object> Task6()
         {
-            IEnumerable<object> result = Emps.Join(Depts,k=>k.Deptno,e=>e.Deptno,(emp, dept)=>emp.Ename));
+            IEnumerable<object> result = Emps.Join(Depts,k=>k.Deptno,e=>e.Deptno,(emp, dept)=>emp.Ename,);
             return result;
+            
+            
+            
+            
+            
+            
         }
 
         /// <summary>
