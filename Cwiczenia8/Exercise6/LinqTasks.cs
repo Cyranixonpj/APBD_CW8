@@ -311,8 +311,8 @@ namespace Exercise6
                 new
                 {
                     Name = dept.Dname,
-                    NumOfEmplyees = emps.Count()
-                }).Where(e => e.NumOfEmplyees > 1);
+                    numOfEmployees = emps.Count()
+                }).Where(e => e.numOfEmployees > 1);
             //Nie skonczone
             return result;
         }
@@ -367,11 +367,11 @@ namespace Exercise6
         public static IEnumerable<Emp>TaskEmpWithMgr(this IEnumerable<Emp> employees)
         {
             return employees
-                .Where(e => e.Mgr!=null)
+                .Where(e => employees.Any(emp=>emp.Mgr==e))
                 .OrderBy(e => e.Ename)
                 .ThenByDescending(e => e.Salary);
 
-        }
+        } 
         //Put your extension methods here
     }
 }
