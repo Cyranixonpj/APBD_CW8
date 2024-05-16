@@ -7,7 +7,7 @@ namespace Exercise6
 {
     public static class LinqTasks
     {
-        public static IEnumerable<Emp> Emps { get; set; }
+        public static IEnumerable<Emp> Emps  { get; set; }
         public static IEnumerable<Dept> Depts { get; set; }
 
         static LinqTasks()
@@ -307,10 +307,10 @@ namespace Exercise6
         /// </summary>
         public static IEnumerable<object> Task11()
         {
-            IEnumerable<object> result = Depts.GroupJoin(Emps, dept => dept.Deptno, emp => emp.Deptno, (Depts, emps) =>
+            IEnumerable<object> result = Depts.GroupJoin(Emps, dept => dept.Deptno, emp => emp.Deptno, (dept, emps) =>
                 new
                 {
-                    name = Depts.Dname,
+                    Name = dept.Dname,
                     NumOfEmplyees = emps.Count()
                 }).Where(e => e.NumOfEmplyees > 1);
             //Nie skonczone
@@ -326,7 +326,7 @@ namespace Exercise6
         /// </summary>
         public static IEnumerable<Emp> Task12()
         {
-            IEnumerable<Emp> result = null;
+            IEnumerable<Emp> result = Emps.TaskEmpWithMgr();
             return result;
         }
 
@@ -353,14 +353,25 @@ namespace Exercise6
         /// </summary>
         public static IEnumerable<Dept> Task14()
         {
-            IEnumerable<Dept> result = null;
-            //result =
+            IEnumerable<Dept> result = Depts
+                .Where(d=>Emps
+                    .Count(e=>e.Deptno==d.Deptno)==0 || Emps.Count(e => e.Deptno == d.Deptno) == 5).OrderBy(d=>d.Dname);
+            
             return result;
         }
     }
 
     public static class CustomExtensionMethods
     {
+
+        public static IEnumerable<Emp>TaskEmpWithMgr(this IEnumerable<Emp> employees)
+        {
+            return employees
+                .Where(e => e.Mgr!=null)
+                .OrderBy(e => e.Ename)
+                .ThenByDescending(e => e.Salary);
+
+        }
         //Put your extension methods here
     }
 }
